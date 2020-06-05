@@ -18,12 +18,12 @@ public class FichaSocioeconomica implements Serializable {
     @Column(name = "id_ficha_socieconomica")
     private Long idFichaSocioeconomica;
 
-    @Size(max = 300, message = "{Size.fichasocioeconomica.genograma}")
+    @Size(max = 300, message = "{size.fichasocioeconomica.genograma}")
     @Column(name = "genograma")
     private String genograma;
 
 
-    @Size(max = 200, message = "{Size.fichasocioeconomica.dinamicaFamiliar}")
+    @Size(max = 200, message = "{size.fichasocioeconomica.dinamicaFamiliar}")
     @Column(name = "dinamica_familiar")
     private String dinamicaFamiliar;
 

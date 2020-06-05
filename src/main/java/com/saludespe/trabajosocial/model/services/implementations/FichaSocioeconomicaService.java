@@ -4,9 +4,11 @@ import com.saludespe.trabajosocial.model.dao.IFichaSocioeconomicaDAO;
 import com.saludespe.trabajosocial.model.entities.FichaSocioeconomica;
 import com.saludespe.trabajosocial.model.services.interfaces.IFichaSocioeconomicaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class FichaSocioeconomicaService implements IFichaSocioeconomicaService {
 
     @Autowired
