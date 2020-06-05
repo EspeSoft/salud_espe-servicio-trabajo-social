@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.saludespe.servicio.trabajosocial</groupId>
-	<artifactId>saludespe-servicio-trabajococial</artifactId>
+	<artifactId>saludespe-servicio-trabajosocial</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>saludespe-servicio-trabajococial</name>
+	<name>saludespe-servicio-trabajosocial</name>
 	<description>Servicio Trabajo Social</description>
 
 	<properties>
