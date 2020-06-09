@@ -18,7 +18,7 @@ public class FichaSocioeconomica implements Serializable {
     @Column(name = "id_ficha_socieconomica")
     private Long idFichaSocioeconomica;
 
-    @Size(max = 300, message = "{size.fichasocioeconomica.genograma}")
+    @Size(max = 300, message = "{size.fichasocioecomica.genograma}")
     @Column(name = "genograma")
     private String genograma;
 
@@ -30,5 +30,7 @@ public class FichaSocioeconomica implements Serializable {
     @NotNull
 	@Column(name = "id_empleado")
     private Long idEmpleado;
+
+
 
 }
