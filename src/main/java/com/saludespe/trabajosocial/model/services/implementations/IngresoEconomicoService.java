@@ -15,21 +15,21 @@ public class IngresoEconomicoService implements IIngresoEconomicoService{
 
     @Override
     public IngresoEconomico save(IngresoEconomico ingresoEconomico) {
-        return null;
+        return dao.save(ingresoEconomico);
     }
 
     @Override
     public void delete(Long id) {
-
+        dao.deleteById(id);
     }
 
     @Override
     public IngresoEconomico findById(Long id) {
-        return null;
+        return dao.findById(id).get();
     }
 
     @Override
     public List<IngresoEconomico> findAll() {
-        return null;
+        return (List<IngresoEconomico>)dao.findAll();
     }
 }

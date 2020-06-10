@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@RequestMapping(value="/ingreso-economico")
+@RequestMapping(value="/ingresos-economicos")
 @Validated
 @RestController
 public class IngresoEconomicoController {
@@ -33,7 +33,7 @@ public class IngresoEconomicoController {
         }
     }
 
-    @GetMapping("/all")
+    @GetMapping("")
     @ApiOperation(value = "Buscar lista de Ingreso Económico", notes = "", response = IngresoEconomico.class)
     public List<IngresoEconomico> list() {
         return service.findAll();

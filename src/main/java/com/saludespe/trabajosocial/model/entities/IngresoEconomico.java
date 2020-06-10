@@ -2,6 +2,7 @@ package com.saludespe.trabajosocial.model.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import javax.persistence.JoinColumn;
@@ -22,6 +23,7 @@ public class IngresoEconomico implements Serializable{
      private FichaSocioeconomica fichaSocioeconomica;
 
     @Column(name = "ingreso_individual")
+    @Digits(integer=10, fraction=2)
     private Float ingresoIndividual;
 
     @Column(name = "ingreso_conyuge")

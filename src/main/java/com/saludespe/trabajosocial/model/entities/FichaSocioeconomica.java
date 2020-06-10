@@ -1,5 +1,6 @@
 package com.saludespe.trabajosocial.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ public class FichaSocioeconomica implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
-    @Column(name = "id_ficha_socieconomica")
+    @Column(name = "id_ficha_socioeconomica")
     private Long idFichaSocioeconomica;
 
     @Size(max = 300, message = "{size.fichasocioecomica.genograma}")
@@ -31,6 +32,9 @@ public class FichaSocioeconomica implements Serializable {
 	@Column(name = "id_empleado")
     private Long idEmpleado;
 
+    @OneToOne(mappedBy = "fichaSocioeconomica")
+    @JsonIgnore
+    private IngresoEconomico ingresoEconomico;
 
 
 }
