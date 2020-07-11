@@ -53,7 +53,7 @@ public class IngresoEconomicoController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "Actualizar Ingreso Económico por id", notes = "Se debe enviar el body y el id a actualizar", response = IngresoEconomico.class)
-    public IngresoEconomico update(@PathVariable Long idPaciente, @Valid @RequestBody IngresoEconomico ingresoEconomico, @PathVariable Long id){
+    public IngresoEconomico update(@Valid @RequestBody IngresoEconomico ingresoEconomico, @PathVariable Long id){
         IngresoEconomico newIngresoEconomico= service.findById(id);
         newIngresoEconomico= ingresoEconomico;
         return (service.save(newIngresoEconomico));

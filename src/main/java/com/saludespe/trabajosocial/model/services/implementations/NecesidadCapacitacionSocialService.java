@@ -1,7 +1,6 @@
 package com.saludespe.trabajosocial.model.services.implementations;
 
 import com.saludespe.trabajosocial.model.dao.INecesidadCapacitacionSocialDAO;
-import com.saludespe.trabajosocial.model.entities.IngresoEconomico;
 import com.saludespe.trabajosocial.model.entities.NecesidadCapacitacionSocial;
 import com.saludespe.trabajosocial.model.services.interfaces.INecesidadCapacitacionSocialService;
 import org.springframework.beans.factory.annotation.Autowired;
