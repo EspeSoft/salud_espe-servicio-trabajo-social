@@ -21,43 +21,36 @@ public class FichaSocioeconomicaController {
     @Autowired
     private IFichaSocioeconomicaService service;
 
-    @GetMapping(value = "/{id}")
-    @ApiOperation(value = "Buscar una Ficha Socioeconómica por su Id",
-            notes = "Debe proporcionar un id para buscar un Ficha Socioeconómica", response = FichaSocioeconomica.class)
-    public FichaSocioeconomica retrieve(@PathVariable(value = "id") Long id) {
-        try {
-            return service.findById(id);
-        } catch (NoSuchElementException ex) {
+    @PostMapping("")
+    @ApiOperation(value = "Ingresar ficha socioeconomica", notes = "Se debe enviar el body en formato Json", response = FichaSocioeconomica.class)
+    public FichaSocioeconomica save(@Valid @RequestBody FichaSocioeconomica fichaSocioeconomica) {
+        FichaSocioeconomica fichaSocioeconomica1 = service.findByPaciente(fichaSocioeconomica.getIdPaciente());
+        if (fichaSocioeconomica1 == null) {
+            return service.save(fichaSocioeconomica);
+        }else {
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Ficha socioeconomica no encontrado", ex);
+                    HttpStatus.BAD_REQUEST, "El paciente ya posee una ficha socioeconómica.");
         }
     }
 
-    @GetMapping("/all")
-    @ApiOperation(value = "Buscar lista de FichaSocioeconomica", notes = "", response = FichaSocioeconomica.class)
-    public List<FichaSocioeconomica> list() {
-        return service.findAll();
+    @GetMapping("/{id}")
+    @ApiOperation(value = "Buscar ficha socioeconomica por id", notes = "Se debe enviar el id", response = FichaSocioeconomica.class)
+    public FichaSocioeconomica retrieve(@PathVariable Long id) {
+        return service.findById(id);
     }
 
-    @PostMapping("")
-    @ApiOperation(value = "Guardar la lista de Fichas Socioeconomicas", notes = "Se guardará los datos de signos vitales", response = FichaSocioeconomica.class)
-    public FichaSocioeconomica save(@Valid @RequestBody FichaSocioeconomica fichaSocioeconomica) {
-        return service.save(fichaSocioeconomica);
-    }
-
-    @DeleteMapping("/{id}")
-    @ApiOperation(value = "Eliminar la lista de Fichas Socioeconomicas", notes = "Debe proporcionar un id para eliminar un Signo Vital", response = FichaSocioeconomica.class)
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+    @GetMapping("/search/findByPaciente")
+    @ApiOperation(value = "Buscar ficha socioeconómica por Id del paciente", notes = "", response = FichaSocioeconomica.class)
+    public FichaSocioeconomica findByPaciente(@RequestParam Long idPaciente) {
+        return service.findByPaciente(idPaciente);
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Actualizar fichaSocioeconomica por id", notes = "Se debe enviar el body y el id a actualizar", response = FichaSocioeconomica.class)
-    public FichaSocioeconomica update(@PathVariable Long idPaciente, @Valid @RequestBody FichaSocioeconomica fichaSocioeconomica, @PathVariable Long id){
-        FichaSocioeconomica newFichaSocioeconomica = service.findById(id);
-        newFichaSocioeconomica=fichaSocioeconomica;
-        return (service.save(newFichaSocioeconomica));
+    @ApiOperation(value = "Actualizar ficha socioeconómica por id", notes = "Se debe enviar el body y el id a actualizar", response = FichaSocioeconomica.class)
+    public FichaSocioeconomica update(@Valid @RequestBody FichaSocioeconomica fichaSocioeconomica, @PathVariable Long id){
+        FichaSocioeconomica fichaSocioeconomica1 = service.findById(id);
+        fichaSocioeconomica1=fichaSocioeconomica;
+        return (service.save(fichaSocioeconomica1));
     }
-
 
 }

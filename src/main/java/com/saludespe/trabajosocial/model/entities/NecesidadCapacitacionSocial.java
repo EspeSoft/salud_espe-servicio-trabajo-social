@@ -24,8 +24,8 @@ public class NecesidadCapacitacionSocial implements Serializable {
     private String observacion;
 
     @JsonIgnore
-    @JoinColumn(name = "id_ficha_socioeconomica", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_ficha_socioeconomica", referencedColumnName = "id") // claves foraneas
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private FichaSocioeconomica fichaSocioeconomicao;
+    private FichaSocioeconomica fichaSocioeconomica;
 
 }

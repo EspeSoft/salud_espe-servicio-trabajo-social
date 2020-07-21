@@ -1,4 +1,5 @@
 package com.saludespe.trabajosocial.model.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,31 +18,16 @@ public class IngresoEconomico implements Serializable{
     @Column(name = "id")
     private Long id;
 
-     @OneToOne(cascade = CascadeType.ALL)
-     @JoinColumn(name = "id_ficha_socioeconomica",
-             referencedColumnName = "id_ficha_socioeconomica")
-     private FichaSocioeconomica fichaSocioeconomica;
+    @JsonIgnore
+    @JoinColumn(name = "id_ficha_socioeconomica", referencedColumnName = "id") // claves foraneas
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private FichaSocioeconomica fichaSocioeconomica;
 
-    @Column(name = "ingreso_individual")
-    @Digits(integer=10, fraction=2)
-    private Float ingresoIndividual;
+    @Size(max = 200, message = "{size.ingresoEconomico.tipoIngreso}")
+    @Column(name = "tipo_ingreso")
+    private String tipoIngreso;
 
-    @Column(name = "ingreso_conyuge")
-    private Float ingresoConyuge;
-
-    @Column(name = "ingreso_padres")
-    private Float ingresoPadres;
-
-    @Column(name = "ingreso_jubilacion")
-    private Float ingresojubilacion;
-
-    @Column(name = "ingreso_bono_estado")
-    private Float ingresoBonoEstado;
-
-    @Column(name = "ingreso_pension_judicial")
-    private Float ingresoPensionJudicial;
-
-    @Column(name = "ingreso_otros")
-    private Float ingresoOtros;
+    @Column(name = "valor_ingreso")
+    private Double valorIngreso;
 
 }

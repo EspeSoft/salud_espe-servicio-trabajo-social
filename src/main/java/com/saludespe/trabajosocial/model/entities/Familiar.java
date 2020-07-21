@@ -19,8 +19,7 @@ public class Familiar  implements Serializable {
     private Long id;
 
     @JsonIgnore
-    @JoinColumn(name = "id_ficha_socioeconomica",
-            referencedColumnName = "id_ficha_socioeconomica",nullable = false)
+    @JoinColumn(name = "id_ficha_socioeconomica", referencedColumnName = "id") // claves foraneas
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private FichaSocioeconomica fichaSocioeconomica;
 

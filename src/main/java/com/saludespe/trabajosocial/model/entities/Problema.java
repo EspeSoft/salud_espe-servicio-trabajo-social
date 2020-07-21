@@ -1,5 +1,6 @@
 package com.saludespe.trabajosocial.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,9 +16,9 @@ public class Problema implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_ficha_socioeconomica",
-            referencedColumnName = "id_ficha_socioeconomica")
+    @JsonIgnore
+    @JoinColumn(name = "id_ficha_socioeconomica", referencedColumnName = "id") // claves foraneas
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private FichaSocioeconomica fichaSocioeconomica;
 
     @Column(name = "detalle")

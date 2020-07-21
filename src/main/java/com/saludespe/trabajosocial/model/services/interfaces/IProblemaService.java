@@ -1,5 +1,6 @@
 package com.saludespe.trabajosocial.model.services.interfaces;
 
+import com.saludespe.trabajosocial.model.entities.AspectoVivienda;
 import com.saludespe.trabajosocial.model.entities.Problema;
 
 import java.util.List;
@@ -10,7 +11,10 @@ public interface IProblemaService {
 
     public void delete(Long id);
 
-    public Optional<Problema> findById(Long id);
+    public Problema findById(Long id);
 
     public List<Problema> findAll();
+
+    public List<Problema> findByFichaSocioeconomica(Long idFichaSocioeconomica);
+
 }

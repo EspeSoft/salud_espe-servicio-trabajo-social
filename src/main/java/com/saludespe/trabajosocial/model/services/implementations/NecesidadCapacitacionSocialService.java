@@ -1,12 +1,14 @@
 package com.saludespe.trabajosocial.model.services.implementations;
 
 import com.saludespe.trabajosocial.model.dao.INecesidadCapacitacionSocialDAO;
+import com.saludespe.trabajosocial.model.entities.AspectoVivienda;
 import com.saludespe.trabajosocial.model.entities.NecesidadCapacitacionSocial;
 import com.saludespe.trabajosocial.model.services.interfaces.INecesidadCapacitacionSocialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,17 +26,26 @@ public class NecesidadCapacitacionSocialService implements INecesidadCapacitacio
 
     @Override
     @Transactional
-    public void delete(Long id) { dao.deleteById(id);}
+    public NecesidadCapacitacionSocial findById(Long id) {
+        return dao.findById(id).orElseThrow(()->
+                new EntityNotFoundException("Necesidad de capacitación social no econtrado para el id: " + id));
+    }
 
     @Override
-    @Transactional(readOnly = true)
-    public Optional<NecesidadCapacitacionSocial> findById(Long id) {
-        return dao.findById(id);
+    @Transactional
+    public void delete(Long id) {
+        dao.deleteById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<NecesidadCapacitacionSocial> findAll() {
-        return (List<NecesidadCapacitacionSocial>)dao.findAll();
+        return (List<NecesidadCapacitacionSocial>) dao.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<NecesidadCapacitacionSocial> findByFichaSocioeconomica(Long idFichaSocioeconomica) {
+        return dao.findByFichaSocioeconomica(idFichaSocioeconomica);
     }
 }

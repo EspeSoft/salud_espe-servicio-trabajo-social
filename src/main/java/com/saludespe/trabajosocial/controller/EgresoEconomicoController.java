@@ -1,7 +1,9 @@
 package com.saludespe.trabajosocial.controller;
 
+
 import com.saludespe.trabajosocial.model.entities.EgresoEconomico;
 import com.saludespe.trabajosocial.model.services.interfaces.IEgresoEconomicoService;
+import com.saludespe.trabajosocial.model.services.interfaces.IFichaSocioeconomicaService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,9 +13,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-@RequestMapping(value="/egreso-economico")
+
+@RequestMapping(value="/egresos-economicos")
 @Validated
 @RestController
 public class EgresoEconomicoController {
@@ -21,42 +23,43 @@ public class EgresoEconomicoController {
     @Autowired
     private IEgresoEconomicoService service;
 
-    @GetMapping(value = "/{id}")
-    @ApiOperation(value = "Buscar una Egreso Económico por su Id",
-            notes = "Debe proporcionar un id para buscar un Egreso económico", response = EgresoEconomico.class)
-    public EgresoEconomico retrieve(@PathVariable(value = "id") Long id) {
-        try {
-            return service.findById(id);
-        } catch (NoSuchElementException ex) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Egreso económico no encontrado", ex);
-        }
-    }
-
-    @GetMapping("/all")
-    @ApiOperation(value = "Buscar lista de Egreso económico", notes = "", response = EgresoEconomico.class)
-    public List<EgresoEconomico> list() {
-        return service.findAll();
-    }
+    @Autowired
+    private IFichaSocioeconomicaService fichaSocioeconomicaService;
 
     @PostMapping("")
-    @ApiOperation(value = "Guardar la lista de Egresos económicos", notes = "Se guardará los datos de egresos económicos", response = EgresoEconomico.class)
-    public EgresoEconomico save(@Valid @RequestBody EgresoEconomico egresoEconomico) {
+    @ApiOperation(value = "Ingresar egreso economico", notes = "Se debe enviar el body en formato Json", response = EgresoEconomico.class)
+    public EgresoEconomico save(@PathVariable Long idPaciente, @Valid @RequestBody EgresoEconomico egresoEconomico) {
+        egresoEconomico.setFichaSocioeconomica(fichaSocioeconomicaService.findByPaciente(idPaciente));
         return service.save(egresoEconomico);
     }
 
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "Buscar aspecto de vivienda por id", notes = "Se debe enviar el id", response = EgresoEconomico.class)
+    public EgresoEconomico retrieve(@PathVariable Long id) {
+        return service.findById(id);
+    }
+
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Eliminar la lista de Egresos económicos", notes = "Debe proporcionar un id para eliminar un Egreso económico", response = EgresoEconomico.class)
+    @ApiOperation(value = "Eliminar aspecto de vivienda por id", notes = "Se debe enviar el id", response = EgresoEconomico.class)
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
 
+    @GetMapping("")
+    @ApiOperation(value = "Buscar lista de egresos económicos por paciente", notes = "", response = EgresoEconomico.class)
+    public List<EgresoEconomico> listByAntecedentePersonal(@PathVariable Long idPaciente) {
+        return service.findByFichaSocioeconomica((fichaSocioeconomicaService.findByPaciente(idPaciente)).getId());
+    }
+
+
     @PutMapping("/{id}")
-    @ApiOperation(value = "Actualizar Egreso económico por id", notes = "Se debe enviar el body y el id a actualizar", response = EgresoEconomico.class)
-    public EgresoEconomico update(@PathVariable Long id, @Valid @RequestBody EgresoEconomico egresoEconomico, @PathVariable Long id){
-        EgresoEconomico newEgresoEconomico = service.findById(id);
-        newEgresoEconomico=egresoEconomico;
-        return (service.save(newEgresoEconomico));
+    @ApiOperation(value = "Actualizar antecedenteGinecologico por id", notes = "Se debe enviar el body y el id a actualizar", response = EgresoEconomico.class)
+    public EgresoEconomico update(@PathVariable Long idPaciente, @Valid @RequestBody EgresoEconomico egresoEconomico, @PathVariable Long id){
+        egresoEconomico.setFichaSocioeconomica(fichaSocioeconomicaService.findByPaciente(idPaciente));
+        EgresoEconomico egresoEconomico1 = service.findById(id);
+        egresoEconomico1=egresoEconomico;
+        return (service.save(egresoEconomico1));
     }
 
 }

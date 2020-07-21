@@ -1,5 +1,6 @@
 package com.saludespe.trabajosocial;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -15,11 +16,34 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
 
+import static java.util.Collections.emptyList;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 @EnableEurekaClient
 @EnableFeignClients
 @EnableSwagger2
 @SpringBootApplication
 public class SaludespeServicioTrabajoSocialApplication {
+
+	@Value("${api.common.version}")
+	String apiVersion;
+	@Value("${api.common.title}")
+	String apiTitle;
+	@Value("${api.common.description}")
+	String apiDescription;
+	@Value("${api.common.termsOfServiceUrl}")
+	String apiTermsOfServiceUrl;
+	@Value("${api.common.license}")
+	String apiLicense;
+	@Value("${api.common.licenseUrl}")
+	String apiLicenseUrl;
+	@Value("${api.common.contact.name}")
+	String apiContactName;
+	@Value("${api.common.contact.url}")
+	String apiContactUrl;
+	@Value("${api.common.contact.email}")
+	String apiContactEmail;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SaludespeServicioTrabajoSocialApplication.class, args);
@@ -32,17 +56,22 @@ public class SaludespeServicioTrabajoSocialApplication {
 				.apis(RequestHandlerSelectors.basePackage("com.saludespe.trabajosocial"))
 				.paths(PathSelectors.any())
 				.build()
+				.globalResponseMessage(GET, emptyList())
+				.globalResponseMessage(GET, emptyList())
+				.globalResponseMessage(DELETE, emptyList())
 				.apiInfo(apiDetails());
 	}
 
 	private ApiInfo apiDetails() {
 		return new ApiInfo(
-				"Servicio Trabajo Social API",
-				"Documentacion generada para el servicio trabajo social",
-				"1.0",
-				"Derechos reservados",
-				new Contact("Universidad de las Fuerzas Armadas", "https://github.com/diegoismael81", "diegoismael81@gmail.com"),
-				"API Licence", "https://www.espe.edu.ec/", Collections.emptyList());
+				apiTitle,
+				apiDescription,
+				apiVersion,
+				apiTermsOfServiceUrl,
+				new Contact(apiContactName, apiContactUrl, apiContactEmail),
+				apiLicense,
+				apiLicenseUrl,
+				emptyList());
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.saludespe.trabajosocial.model.services.interfaces;
 
+import com.saludespe.trabajosocial.model.entities.AspectoVivienda;
 import com.saludespe.trabajosocial.model.entities.IngresoEconomico;
 
 import java.util.List;
@@ -13,4 +14,7 @@ public interface IIngresoEconomicoService {
     public IngresoEconomico findById(Long id);
 
     public List<IngresoEconomico> findAll();
+
+    public List<IngresoEconomico> findByFichaSocioeconomica(Long idFichaSocioeconomica);
+
 }
