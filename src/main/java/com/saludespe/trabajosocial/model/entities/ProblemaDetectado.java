@@ -8,8 +8,8 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "PROBLEMA")
-public class Problema implements Serializable {
+@Table(name = "PROBLEMAS_DETECTADOS")
+public class ProblemaDetectado implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

@@ -5,14 +5,14 @@ import com.saludespe.trabajosocial.model.entities.AspectoVivienda;
 import java.util.List;
 
 public interface IAspectosViviendaService {
-    public AspectoVivienda save(AspectoVivienda aspectoVivienda);
+    AspectoVivienda save(AspectoVivienda aspectoVivienda);
 
-    public void  delete(Long id);
+    void  delete(Long id);
 
-    public AspectoVivienda findById(Long id);
+    AspectoVivienda findById(Long id);
 
-    public List<AspectoVivienda> findAll();
+    void deleteAll(List<AspectoVivienda> aspectoViviendas);
 
-    public List<AspectoVivienda> findByFichaSocioeconomica(Long idFichaSocioeconomica);
+    List<AspectoVivienda> findByFichaSocioeconomica(Long idFichaSocioeconomica);
 
 }

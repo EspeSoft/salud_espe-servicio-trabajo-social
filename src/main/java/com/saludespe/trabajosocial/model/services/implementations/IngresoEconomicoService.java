@@ -1,6 +1,5 @@
 package com.saludespe.trabajosocial.model.services.implementations;
 import com.saludespe.trabajosocial.model.dao.IIngresoEconomicoDAO;
-import com.saludespe.trabajosocial.model.entities.AspectoVivienda;
 import com.saludespe.trabajosocial.model.entities.IngresoEconomico;
 import com.saludespe.trabajosocial.model.services.interfaces.IIngresoEconomicoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +35,8 @@ public class IngresoEconomicoService implements IIngresoEconomicoService{
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<IngresoEconomico> findAll() {
-        return (List<IngresoEconomico>) dao.findAll();
+    public void deleteAll(List<IngresoEconomico> ingresosEconomicos) {
+        dao.deleteAll(ingresosEconomicos);
     }
 
     @Override

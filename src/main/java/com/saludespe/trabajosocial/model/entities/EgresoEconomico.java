@@ -3,13 +3,12 @@ package com.saludespe.trabajosocial.model.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "EGRESO_ECONOMICO")
+@Table(name = "EGRESOS_ECONOMICOS")
 public class EgresoEconomico implements Serializable {
 
     private static final long serialVersionUID = 1L;

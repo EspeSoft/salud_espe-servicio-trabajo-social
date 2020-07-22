@@ -4,14 +4,13 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.OneToMany;
 
 @Entity
 @Data
-@Table(name = "FICHA_SOCIOECONOMICA")
+@Table(name = "FICHAS_SOCIOECONOMICAS")
 public class FichaSocioeconomica implements Serializable {
     
     @Id
@@ -20,11 +19,11 @@ public class FichaSocioeconomica implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Size(max = 300, message = "{size.fichasocioecomica.genograma}")
+
     @Column(name = "genograma")
     private String genograma;
 
-    @Size(max = 200, message = "{size.fichasocioeconomica.dinamicaFamiliar}")
+
     @Column(name = "dinamica_familiar")
     private String dinamicaFamiliar;
 
@@ -39,13 +38,13 @@ public class FichaSocioeconomica implements Serializable {
     private List<EgresoEconomico> egresoEconomicoList;
 
     @OneToMany(mappedBy = "familiar", fetch = FetchType.LAZY)
-    private List<Familiar> familiarList;
+    private List<GrupoFamiliar> familiarList;
 
     @OneToMany(mappedBy = "necesidadCapacitacionSocial", fetch = FetchType.LAZY)
-    private List<NecesidadCapacitacionSocial> necesidadCapacitacionSocialList;
+    private List<AspectoSocial> aspectoSocialList;
 
     @OneToMany(mappedBy = "problema", fetch = FetchType.LAZY)
-    private List<Problema> problemaList;
+    private List<ProblemaDetectado> problemaDetectadoList;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_aspecto_vivienda", referencedColumnName ="id" )

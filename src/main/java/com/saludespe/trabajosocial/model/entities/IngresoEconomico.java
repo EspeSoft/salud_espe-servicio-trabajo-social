@@ -3,14 +3,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 @Entity
 @Data
-@Table(name = "INGRESO_ECONOMICO")
+@Table(name = "INGRESOS_ECONOMICOS")
 public class IngresoEconomico implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +21,6 @@ public class IngresoEconomico implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private FichaSocioeconomica fichaSocioeconomica;
 
-    @Size(max = 200, message = "{size.ingresoEconomico.tipoIngreso}")
     @Column(name = "tipo_ingreso")
     private String tipoIngreso;
 

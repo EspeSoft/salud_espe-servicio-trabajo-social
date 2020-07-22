@@ -1,9 +1,8 @@
 package com.saludespe.trabajosocial.model.services.implementations;
 
-import com.saludespe.trabajosocial.model.dao.IFamiliarDao;
-import com.saludespe.trabajosocial.model.entities.AspectoVivienda;
-import com.saludespe.trabajosocial.model.entities.Familiar;
-import com.saludespe.trabajosocial.model.services.interfaces.IFamiliarService;
+import com.saludespe.trabajosocial.model.dao.IGrupoFamiliarDao;
+import com.saludespe.trabajosocial.model.entities.GrupoFamiliar;
+import com.saludespe.trabajosocial.model.services.interfaces.IGrupoFamiliarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,20 +11,20 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
-public class FamiliarService implements IFamiliarService {
+public class GrupoFamiliarService implements IGrupoFamiliarService {
 
     @Autowired
-    private IFamiliarDao dao;
+    private IGrupoFamiliarDao dao;
 
     @Override
     @Transactional
-    public Familiar save(Familiar familiar) {
+    public GrupoFamiliar save(GrupoFamiliar familiar) {
         return dao.save(familiar);
     }
 
     @Override
     @Transactional
-    public Familiar findById(Long id) {
+    public GrupoFamiliar findById(Long id) {
         return dao.findById(id).orElseThrow(()->
                 new EntityNotFoundException("Familiar no econtrado para el id: " + id));
     }
@@ -37,14 +36,13 @@ public class FamiliarService implements IFamiliarService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Familiar> findAll() {
-        return (List<Familiar>) dao.findAll();
+    public void deleteAll(List<GrupoFamiliar> gruposFamiliares) {
+        dao.deleteAll(gruposFamiliares);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Familiar> findByFichaSocioeconomica(Long idFichaSocioeconomica) {
+    public List<GrupoFamiliar> findByFichaSocioeconomica(Long idFichaSocioeconomica) {
         return dao.findByFichaSocioeconomica(idFichaSocioeconomica);
     }
 

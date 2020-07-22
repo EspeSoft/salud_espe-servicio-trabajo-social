@@ -6,9 +6,6 @@ import com.saludespe.trabajosocial.model.services.interfaces.IFichaSocioeconomic
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityNotFoundException;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,10 +22,10 @@ public class FichaSocioeconomicaService implements IFichaSocioeconomicaService {
 
     @Override
     @Transactional
-    public FichaSocioeconomica findById(Long id) {
-        return dao.findById(id).orElseThrow(()->
-                new EntityNotFoundException("Ficha socioeconómica no encontrado para el id: " + id));
+    public Optional<FichaSocioeconomica> findById(Long id){
+        return dao.findById(id);
     }
+
     @Override
     @Transactional
     public void delete(Long id) {
@@ -37,13 +34,7 @@ public class FichaSocioeconomicaService implements IFichaSocioeconomicaService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<FichaSocioeconomica> findAll() {
-        return (List<FichaSocioeconomica>) dao.findAll();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public FichaSocioeconomica findByPaciente(Long idPaciente) {
+    public Optional<FichaSocioeconomica> findByPaciente(Long idPaciente){
         return dao.findByPaciente(idPaciente);
     }
 }

@@ -1,24 +1,29 @@
 package com.saludespe.trabajosocial.controller;
 
+
 import com.saludespe.trabajosocial.model.entities.AspectoVivienda;
-import com.saludespe.trabajosocial.model.entities.IngresoEconomico;
+import com.saludespe.trabajosocial.model.entities.FichaSocioeconomica;
 import com.saludespe.trabajosocial.model.services.interfaces.IAspectosViviendaService;
 import com.saludespe.trabajosocial.model.services.interfaces.IFichaSocioeconomicaService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
+
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-@RequestMapping(value="/aspectos-vivienda")
+import java.util.Optional;
+
+@RequestMapping(value="{idPaciente}/aspectos-vivienda")
 @Validated
 @RestController
 public class AspectoViviendaController {
+
+    private static String aspectoNotFoundMessage = "No existe un registro de este tipo,  para el paciente: ";
 
     @Autowired
     private IAspectosViviendaService service;
@@ -26,15 +31,27 @@ public class AspectoViviendaController {
     @Autowired
     private IFichaSocioeconomicaService fichaSocioeconomicaService;
 
-    @PostMapping("")
-    @ApiOperation(value = "Ingresar aspecto vivienda", notes = "Se debe enviar el body en formato Json", response = AspectoVivienda.class)
-    public AspectoVivienda save(@PathVariable Long idPaciente, @Valid @RequestBody AspectoVivienda aspectoVivienda) {
-        aspectoVivienda.setFichaSocioeconomica(fichaSocioeconomicaService.findByPaciente(idPaciente));
-        return service.save(aspectoVivienda);
+    @PostMapping("/")
+    @ApiOperation(
+            value = "Ingresar aspectos de vivienda",
+            notes = "Se debe enviar el body en formato Json",
+            response = AspectoVivienda.class)
+    public AspectoVivienda save(@PathVariable Long idPaciente,
+                              @Valid @RequestBody AspectoVivienda aspectoVivienda) {
+        Optional<FichaSocioeconomica> fichaSocioeconomica = fichaSocioeconomicaService.findByPaciente(idPaciente);
+        if (fichaSocioeconomica.isPresent()){
+            aspectoVivienda.setFichaSocioeconomica(fichaSocioeconomica.get());
+            return  service.save(aspectoVivienda);
+        }else  {
+            throw new EntityNotFoundException(aspectoNotFoundMessage + idPaciente);
+        }
+
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Buscar aspecto de vivienda por id", notes = "Se debe enviar el id", response = AspectoVivienda.class)
+    @ApiOperation(value = "Buscar aspecto de vivienda por id",
+            notes = "Se debe enviar el id",
+            response = AspectoVivienda.class)
     public AspectoVivienda retrieve(@PathVariable Long id) {
         return service.findById(id);
     }
@@ -45,24 +62,48 @@ public class AspectoViviendaController {
         service.delete(id);
     }
 
-    @GetMapping("")
-    @ApiOperation(value = "Buscar lista de aspectos de vivienda por paciente", notes = "", response = AspectoVivienda.class)
-    public List<AspectoVivienda> listByAntecedentePersonal(@PathVariable Long idPaciente) {
-        return service.findByFichaSocioeconomica((fichaSocioeconomicaService.findByPaciente(idPaciente)).getId());
+    @DeleteMapping("/delete-all")
+    @ApiOperation(
+            value = "Eliminar una lista de aspectos de vivienda",
+            notes = "Se debe enviar una lista",
+            response = AspectoVivienda.class)
+    public void deleteAll(@RequestBody List<AspectoVivienda> aspectoViviendas) {
+        service.deleteAll(aspectoViviendas);
     }
 
-    @GetMapping("/all")
-    @ApiOperation(value = "Buscar lista de aspectos de vivienda", notes = "", response = AspectoVivienda.class)
-    public List<AspectoVivienda> list() {
-        return service.findAll();
+    @GetMapping("")
+    @ApiOperation(
+            value = "Buscar lista de aspecto de vivienda por paciente", notes = "", response = AspectoVivienda.class)
+    public List<AspectoVivienda> aspectoViviendaList(@PathVariable Long idPaciente) {
+        Optional<FichaSocioeconomica> fichaSocioeconomica = fichaSocioeconomicaService.findByPaciente(idPaciente);
+        if(fichaSocioeconomica.isPresent()){
+            return service.findByFichaSocioeconomica(fichaSocioeconomica.get().getId());
+        }else {
+            throw new EntityNotFoundException(aspectoNotFoundMessage + idPaciente);
+        }
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Actualizar aspecto de vivienda por id", notes = "Se debe enviar el body y el id a actualizar", response = AspectoVivienda.class)
-    public AspectoVivienda update(@PathVariable Long idPaciente, @Valid @RequestBody AspectoVivienda aspectoVivienda, @PathVariable Long id){
-        aspectoVivienda.setFichaSocioeconomica(fichaSocioeconomicaService.findByPaciente(idPaciente));
-        AspectoVivienda aspectoVivienda1 = service.findById(id);
-        aspectoVivienda1=aspectoVivienda;
-        return (service.save(aspectoVivienda1));
+    @ApiOperation(
+            value = "Actualizar aspecto de vivienda por id",
+            notes = "Se debe enviar el body y el id a actualizar",
+            response = AspectoVivienda.class)
+    public AspectoVivienda update(
+            @PathVariable Long idPaciente,
+            @Valid @RequestBody AspectoVivienda aspectoVivienda, @PathVariable Long id){
+        Optional<FichaSocioeconomica> fichaSocioeconomica = fichaSocioeconomicaService.findByPaciente(idPaciente);
+        if (fichaSocioeconomica.isPresent()){
+            AspectoVivienda aspecto = service.findById(id);
+            aspecto.setEstructura(aspectoVivienda.getEstructura());
+            aspecto.setTenencia(aspectoVivienda.getTenencia());
+            aspecto.setTieneaguaPotable(aspectoVivienda.getTieneaguaPotable());
+            aspecto.setTieneAlcantarillado(aspectoVivienda.getTieneAlcantarillado());
+            aspecto.setTieneLuzElectrica(aspectoVivienda.getTieneLuzElectrica());
+            aspecto.setTieneTelefono(aspectoVivienda.getTieneTelefono());
+            aspecto.setTipo(aspecto.getTipo());
+            return service.save(aspecto);
+        }else{
+            throw new EntityNotFoundException(aspectoNotFoundMessage + idPaciente);
+        }
     }
 }

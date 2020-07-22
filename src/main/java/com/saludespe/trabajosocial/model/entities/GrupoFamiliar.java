@@ -9,8 +9,8 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "FAMILIAR")
-public class Familiar  implements Serializable {
+@Table(name = "GRUPOS_FAMILIARES")
+public class GrupoFamiliar implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,30 +23,30 @@ public class Familiar  implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private FichaSocioeconomica fichaSocioeconomica;
 
-    @Size(max = 300, message = "{size.trabajosocial.300}")
+
     @Column(name = "nombre_completo")
     private String nombreCompleto;
 
     @Column(name = "edad")
     private Integer edad;
 
-    @Size(max = 200, message = "{size.trabajosocial.200}")
+
     @Column(name = "parentesco")
     private String parentesco;
 
-    @Size(max = 300, message = "{size.trabajosocial.300}")
+
     @Column(name = "estudio_realizado")
     private String estudioRealizado;
 
-    @Size(max = 200, message = "{size.trabajosocial.200}")
-    @Column(name = "estado_civil")
-    private String estado_civil;
 
-    @Size(max = 300, message = "{size.trabajosocial.300}")
+    @Column(name = "estado_civil")
+    private String estadoCivil;
+
+
     @Column(name = "vinculacion_laboral")
     private String vinculacionLaboral;
 
-    @Size(max = 300, message = "{size.trabajosocial.300}")
+
     @Column(name = "estado_salud")
     private String estadoSalud;
 

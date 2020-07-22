@@ -1,22 +1,17 @@
 package com.saludespe.trabajosocial.model.services.interfaces;
 
-import com.saludespe.trabajosocial.model.entities.AspectoVivienda;
 import com.saludespe.trabajosocial.model.entities.FichaSocioeconomica;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface IFichaSocioeconomicaService {
     
-    public FichaSocioeconomica save(FichaSocioeconomica ficha);
+	FichaSocioeconomica save(FichaSocioeconomica ficha);
 
-	public void delete(Long id);
+	void delete(Long id);
 	
-	public FichaSocioeconomica findById(Long id);
-	
-	public List<FichaSocioeconomica> findAll();
+	Optional<FichaSocioeconomica> findById(Long id);
 
-	public FichaSocioeconomica findByPaciente(Long idPaciente);
-
-	public List<FichaSocioeconomica> findByFichaSocioeconomica(Long idFichaSocioeconomica);
+	Optional<FichaSocioeconomica> findByPaciente(Long idPaciente);
 
 }

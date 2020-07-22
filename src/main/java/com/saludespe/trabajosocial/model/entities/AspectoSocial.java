@@ -1,14 +1,23 @@
 package com.saludespe.trabajosocial.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 @Data
 @Entity
-@Table(name = "NECESIDADES_CAPACITACION_SOCIAL")
-public class NecesidadCapacitacionSocial implements Serializable {
+@Table(name = "ASPECTOS_SOCIALES")
+public class AspectoSocial implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -23,9 +32,9 @@ public class NecesidadCapacitacionSocial implements Serializable {
     @Column(name = "observacion")
     private String observacion;
 
-    @JsonIgnore
+
     @JoinColumn(name = "id_ficha_socioeconomica", referencedColumnName = "id") // claves foraneas
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     private FichaSocioeconomica fichaSocioeconomica;
 
 }

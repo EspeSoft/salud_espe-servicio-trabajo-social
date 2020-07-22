@@ -1,7 +1,6 @@
 package com.saludespe.trabajosocial.model.services.implementations;
 
 import com.saludespe.trabajosocial.model.dao.IEgresoEconomicoDAO;
-import com.saludespe.trabajosocial.model.entities.AspectoVivienda;
 import com.saludespe.trabajosocial.model.entities.EgresoEconomico;
 import com.saludespe.trabajosocial.model.services.interfaces.IEgresoEconomicoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +31,14 @@ public class EgresoEconomicoService implements IEgresoEconomicoService {
     }
 
     @Override
-    @Transactional
-    public void delete(Long id) {
-        dao.deleteById(id);
+    public void deleteAll(List<EgresoEconomico> egresoEconomicos) {
+        dao.deleteAll(egresoEconomicos);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<EgresoEconomico> findAll() {
-        return (List<EgresoEconomico>) dao.findAll();
+    @Transactional
+    public void delete(Long id) {
+        dao.deleteById(id);
     }
 
     @Override

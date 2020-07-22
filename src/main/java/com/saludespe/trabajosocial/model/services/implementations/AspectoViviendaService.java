@@ -29,15 +29,14 @@ public class AspectoViviendaService implements IAspectosViviendaService {
     }
 
     @Override
-    @Transactional
-    public void delete(Long id) {
-        dao.deleteById(id);
+    public void deleteAll(List<AspectoVivienda> aspectoViviendas) {
+      dao.deleteAll(aspectoViviendas);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<AspectoVivienda> findAll() {
-        return (List<AspectoVivienda>) dao.findAll();
+    @Transactional
+    public void delete(Long id) {
+        dao.deleteById(id);
     }
 
     @Override

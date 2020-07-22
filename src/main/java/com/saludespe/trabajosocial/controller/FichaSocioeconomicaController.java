@@ -9,23 +9,28 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RequestMapping(value="/ficha-socioeconomica")
 @Validated
 @RestController
 public class FichaSocioeconomicaController {
 
+    private static String notFoundMessage = "Ficha socioeconómica no encontrado para el id: ";
+
     @Autowired
     private IFichaSocioeconomicaService service;
 
     @PostMapping("")
-    @ApiOperation(value = "Ingresar ficha socioeconomica", notes = "Se debe enviar el body en formato Json", response = FichaSocioeconomica.class)
+    @ApiOperation(
+            value = "Ingresar ficha socioeconomica",
+            notes = "Se debe enviar el body en formato Json",
+            response = FichaSocioeconomica.class)
     public FichaSocioeconomica save(@Valid @RequestBody FichaSocioeconomica fichaSocioeconomica) {
-        FichaSocioeconomica fichaSocioeconomica1 = service.findByPaciente(fichaSocioeconomica.getIdPaciente());
-        if (fichaSocioeconomica1 == null) {
+        Optional<FichaSocioeconomica> fichaSocioeconomica1 = service.findByPaciente(fichaSocioeconomica.getIdPaciente());
+        if (!fichaSocioeconomica1.isPresent()) {
             return service.save(fichaSocioeconomica);
         }else {
             throw new ResponseStatusException(
@@ -34,23 +39,47 @@ public class FichaSocioeconomicaController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Buscar ficha socioeconomica por id", notes = "Se debe enviar el id", response = FichaSocioeconomica.class)
+    @ApiOperation(
+            value = "Buscar ficha socioeconomica por id",
+            notes = "Se debe enviar el id",
+            response = FichaSocioeconomica.class)
     public FichaSocioeconomica retrieve(@PathVariable Long id) {
-        return service.findById(id);
+        Optional<FichaSocioeconomica> fichaSocioeconomica = service.findById(id);
+        if (fichaSocioeconomica.isPresent()){
+            return fichaSocioeconomica.get();
+        }else{
+            throw new EntityNotFoundException(notFoundMessage + id);
+        }
     }
 
-    @GetMapping("/search/findByPaciente")
-    @ApiOperation(value = "Buscar ficha socioeconómica por Id del paciente", notes = "", response = FichaSocioeconomica.class)
+    @GetMapping("/search")
+    @ApiOperation(
+            value = "Buscar ficha socioeconómica por Id del paciente",
+            notes = "Enviar id del paciente",
+            response = FichaSocioeconomica.class)
     public FichaSocioeconomica findByPaciente(@RequestParam Long idPaciente) {
-        return service.findByPaciente(idPaciente);
+        Optional<FichaSocioeconomica> fichaSocioeconomica = service.findByPaciente(idPaciente);
+        if (fichaSocioeconomica.isPresent()){
+            return fichaSocioeconomica.get();
+        }else{
+            throw new EntityNotFoundException(notFoundMessage + idPaciente);
+        }
+    }
+    @PutMapping("/{id}")
+    @ApiOperation(
+            value = "Actualizar ficha socioeconómica por id",
+            notes = "Se debe enviar el body y el id a actualizar",
+            response = FichaSocioeconomica.class)
+    public FichaSocioeconomica update(@Valid @RequestBody FichaSocioeconomica fichaSocioeconomica, @PathVariable Long id){
+        Optional<FichaSocioeconomica> optional = service.findById(id);
+        if (optional.isPresent()){
+           FichaSocioeconomica ficha = optional.get();
+           ficha.setGenograma(fichaSocioeconomica.getGenograma());
+            return service.save(ficha);
+        }else{
+            throw new EntityNotFoundException(notFoundMessage + id);
+        }
     }
 
-    @PutMapping("/{id}")
-    @ApiOperation(value = "Actualizar ficha socioeconómica por id", notes = "Se debe enviar el body y el id a actualizar", response = FichaSocioeconomica.class)
-    public FichaSocioeconomica update(@Valid @RequestBody FichaSocioeconomica fichaSocioeconomica, @PathVariable Long id){
-        FichaSocioeconomica fichaSocioeconomica1 = service.findById(id);
-        fichaSocioeconomica1=fichaSocioeconomica;
-        return (service.save(fichaSocioeconomica1));
-    }
 
 }
