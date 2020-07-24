@@ -1,0 +1,80 @@
+# Configuration for all profiles
+api:
+
+  common:
+    version: 1.0
+    title: Servicio Trabajo Social API
+    description: Documentacion generada para el servicio trabajo social
+    termsOfServiceUrl: https://www.espe.edu.ec/
+    license: Derechos reservados
+    licenseUrl: https://www.espe.edu.ec/
+
+    contact:
+      name: Universidad de las Fuerzas Armadas
+      url: https://www.espe.edu.ec/
+      email: diegoismael81@gmail.com
+
+# Default(local without docker) profile
+app.eureka-server: localhost
+
+spring:
+  application:
+    name: servicio-trabajo-social
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+
+server.port: 8004
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${app.eureka-server}:8761/eureka/
+    initial-instance-info-replication-interval-seconds: 5
+    registry-fetch-interval-seconds: 5
+  instance:
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 5
+#ribbon.ServerListRefreshInterval: 5000
+#ribbon.NFLoadBalancerPingInterval: 5
+
+
+# Docker profile
+---
+app.eureka-server: servicio-eureka-server
+
+spring:
+  profiles: docker
+  application:
+    name: servicio-trabajo-social
+  datasource:
+    url: jdbc:postgresql://saludespe_postgres:5432/db_servicio_trabajo_social
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create
+
+server.port: 8080
+eureka.client.serviceUrl.defaultZone: http://${app.eureka-server}:8761/eureka/
+
+logging:
+  level:
+    root: ERROR
+    org.springframework.web: ERROR
+    com.howtodoinjava: DEBUG
+    org.hibernate.SQL: DEBUG

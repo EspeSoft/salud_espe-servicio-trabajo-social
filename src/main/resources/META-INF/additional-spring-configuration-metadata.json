@@ -1,0 +1,53 @@
+{
+  "properties": [
+    {
+      "name": "api.common.version",
+      "type": "java.lang.String",
+      "description": "Description for api.common.version."
+    },
+    {
+      "name": "api.common.title",
+      "type": "java.lang.String",
+      "description": "Description for api.common.title."
+    },
+    {
+      "name": "api.common.description",
+      "type": "java.lang.String",
+      "description": "Description for api.common.description."
+    },
+    {
+      "name": "api.common.termsOfServiceUrl",
+      "type": "java.lang.String",
+      "description": "Description for api.common.termsOfServiceUrl."
+    },
+    {
+      "name": "api.common.license",
+      "type": "java.lang.String",
+      "description": "Description for api.common.license."
+    },
+    {
+      "name": "api.common.licenseUrl",
+      "type": "java.lang.String",
+      "description": "Description for api.common.licenseUrl."
+    },
+    {
+      "name": "api.common.contact.name",
+      "type": "java.lang.String",
+      "description": "Description for api.common.contact.name."
+    },
+    {
+      "name": "api.common.contact.url",
+      "type": "java.lang.String",
+      "description": "Description for api.common.contact.url."
+    },
+    {
+      "name": "api.common.contact.email",
+      "type": "java.lang.String",
+      "description": "Description for api.common.contact.email."
+    },
+    {
+      "name": "app.eureka-server",
+      "type": "java.lang.String",
+      "description": "Description for app.eureka-server."
+    }
+  ] }
