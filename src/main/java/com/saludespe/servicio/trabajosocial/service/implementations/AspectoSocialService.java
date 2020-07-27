@@ -27,7 +27,7 @@ public class AspectoSocialService implements IAspectoSocialService {
     @Transactional
     public AspectoSocial findById(Long id) {
         return dao.findById(id).orElseThrow(()->
-                new EntityNotFoundException("Necesidad de capacitación social no econtrado para el id: " + id));
+                new EntityNotFoundException("Aspecto social no econtrado para el id: " + id));
     }
 
     @Override

@@ -41,16 +41,16 @@ public class FichaSocioeconomica implements Serializable {
 	@Column(name = "id_paciente") // TODO Implementar como campo unico
     private Long idPaciente;
 
-    @OneToMany(mappedBy = "ingresoEconomico", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fichaSocioeconomica", fetch = FetchType.LAZY)
     private List<IngresoEconomico> ingresoEconomicoList;
 
-    @OneToMany(mappedBy ="egresoEconomico", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy ="fichaSocioeconomica", fetch = FetchType.LAZY)
     private List<EgresoEconomico> egresoEconomicoList;
 
-    @OneToMany(mappedBy = "familiar", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fichaSocioeconomica", fetch = FetchType.LAZY)
     private List<GrupoFamiliar> familiarList;
 
-    @OneToMany(mappedBy = "necesidadCapacitacionSocial", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "fichaSocioeconomica", fetch = FetchType.LAZY)
     private List<AspectoSocial> aspectoSocialList;
 
     @OneToMany(mappedBy = "fichaSocioeconomica", fetch = FetchType.LAZY)

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IProblemaDetectadoDAO extends CrudRepository<ProblemaDetectado, Long> {
 
-    @Query(value = "SELECT * FROM PROBLEMAS_DETECTADOSapp WHERE app.id_ficha_socioeconomica = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM PROBLEMAS_DETECTADOS app WHERE app.id_ficha_socioeconomica = ?1", nativeQuery = true)
     List<ProblemaDetectado> findByFichaSocioeconomica(Long idFichaSocioeconomica);
 
 }

@@ -31,7 +31,7 @@ public class IngresoEconomicoController {
     @Autowired
     private IFichaSocioeconomicaService fichaSocioeconomicaService;
 
-    @PostMapping("")
+    @PostMapping("/")
     @ApiOperation(
             value = "Ingresar ingreso económico",
             notes = "Se debe enviar el body en formato Json",

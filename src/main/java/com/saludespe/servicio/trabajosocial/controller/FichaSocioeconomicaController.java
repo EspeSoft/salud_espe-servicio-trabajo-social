@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Validated
@@ -23,7 +24,7 @@ public class FichaSocioeconomicaController {
     @Autowired
     private IFichaSocioeconomicaService service;
 
-    @PostMapping("")
+    @PostMapping("/")
     @ApiOperation(
             value = "Ingresar ficha socioeconomica",
             notes = "Se debe enviar el body en formato Json",
@@ -76,6 +77,8 @@ public class FichaSocioeconomicaController {
         Optional<FichaSocioeconomica> optional = service.findById(id);
         if (optional.isPresent()){
            FichaSocioeconomica ficha = optional.get();
+           ficha.setFechaRegistro(fichaSocioeconomica.getFechaRegistro());
+           ficha.setDinamicaFamiliar(fichaSocioeconomica.getDinamicaFamiliar());
            ficha.setGenograma(fichaSocioeconomica.getGenograma());
             return service.save(ficha);
         }else{

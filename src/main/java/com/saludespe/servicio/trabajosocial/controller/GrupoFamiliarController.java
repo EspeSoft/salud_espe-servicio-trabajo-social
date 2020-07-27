@@ -19,7 +19,7 @@ import java.util.Optional;
 @Validated
 @RestController
 public class GrupoFamiliarController {
-    private static String familiarNotFoundMessage = "No existe grupo familiar para el paciente: ";
+    private static String familiarNotFoundMessage = "No existe ficha socioeconómica para el paciente: ";
 
     @Autowired
     private IGrupoFamiliarService service;

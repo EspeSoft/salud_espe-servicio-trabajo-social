@@ -1,5 +1,6 @@
 package com.saludespe.servicio.trabajosocial.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,9 +22,9 @@ public class EgresoEconomico implements Serializable {
 
     @JoinColumn(name = "id_ficha_socioeconomica", referencedColumnName = "id") // claves foraneas
     @ManyToOne
+    @JsonIgnore
     private FichaSocioeconomica fichaSocioeconomica;
 
-    @Size(max = 200, message = "{size.egresoEconomico.tipoEgreso}")
     @Column(name = "tipo_egreso")
     private String tipoEgreso;
 
