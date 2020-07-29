@@ -50,7 +50,7 @@ public class SaludespeServicioTrabajosocialApplication {
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.saludespe.trabajosocial"))
+                .apis(RequestHandlerSelectors.basePackage("com.saludespe.servicio.trabajosocial"))
                 .paths(PathSelectors.any())
                 .build()
                 .globalResponseMessage(GET, emptyList())
