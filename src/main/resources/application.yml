@@ -59,8 +59,8 @@ spring:
     name: servicio-trabajo-social
   datasource:
     url: jdbc:postgresql://saludespe_postgres:5432/db_servicio_trabajo_social
-    username: postgres
-    password: postgres
+    username: lugo
+    password: Lugo1234
     driver-class-name: org.postgresql.Driver
   jpa:
     database: POSTGRESQL
