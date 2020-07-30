@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -25,8 +26,8 @@ public class GrupoFamiliar implements Serializable {
     @Column(name = "nombre_completo")
     private String nombreCompleto;
 
-    @Column(name = "edad")
-    private Integer edad;
+    @Column(name = "fecha_nacimiento")
+    private LocalDate fechaNacimiento;
 
     @Column(name = "parentesco")
     private String parentesco;

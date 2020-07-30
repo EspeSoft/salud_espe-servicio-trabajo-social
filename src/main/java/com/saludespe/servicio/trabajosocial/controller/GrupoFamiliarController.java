@@ -96,7 +96,7 @@ public class GrupoFamiliarController {
         Optional<FichaSocioeconomica> fichaSocioeconomica = fichaSocioeconomicaService.findByPaciente(idPaciente);
         if (fichaSocioeconomica.isPresent()){
             GrupoFamiliar familiar = service.findById(id);
-            familiar.setEdad(grupoFamiliar.getEdad());
+            familiar.setFechaNacimiento(grupoFamiliar.getFechaNacimiento());
             familiar.setEstadoCivil(grupoFamiliar.getEstadoCivil());
             familiar.setEstadoSalud(grupoFamiliar.getEstadoSalud());
             familiar.setEstudioRealizado(grupoFamiliar.getEstudioRealizado());

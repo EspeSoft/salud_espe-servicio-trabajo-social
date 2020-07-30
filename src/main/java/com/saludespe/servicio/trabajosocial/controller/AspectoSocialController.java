@@ -95,6 +95,7 @@ public class AspectoSocialController {
             AspectoSocial social = service.findById(id);
             social.setNombreNecesidad(aspectoSocial.getNombreNecesidad());
             social.setObservacion(aspectoSocial.getObservacion());
+            social.setFrecuencia(aspectoSocial.getFrecuencia());
             return service.save(social);
         }else{
             throw new EntityNotFoundException(aspectoNotFoundMessage + idPaciente);
