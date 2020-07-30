@@ -30,6 +30,9 @@ public class AspectoSocial implements Serializable {
     @Column(name = "nombre_necesidad")
     private String nombreNecesidad;
 
+    @Column(name = "frecuencia")
+    private String frecuencia;
+
     @Column(name = "observacion")
     private String observacion;
 
