@@ -80,6 +80,7 @@ public class FichaSocioeconomicaController {
            ficha.setFechaRegistro(fichaSocioeconomica.getFechaRegistro());
            ficha.setDinamicaFamiliar(fichaSocioeconomica.getDinamicaFamiliar());
            ficha.setGenograma(fichaSocioeconomica.getGenograma());
+           ficha.setAspectoVivienda(fichaSocioeconomica.getAspectoVivienda());
             return service.save(ficha);
         }else{
             throw new EntityNotFoundException(notFoundMessage + id);

@@ -33,8 +33,7 @@ public class FichaSocioeconomica implements Serializable {
     @Column(name = "dinamica_familiar")
     private String dinamicaFamiliar;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_aspecto_vivienda", referencedColumnName ="id" )
+    @Embedded
     private AspectoVivienda aspectoVivienda;
 
     @NotNull
