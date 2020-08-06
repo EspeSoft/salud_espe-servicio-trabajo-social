@@ -28,4 +28,7 @@ public class AspectoVivienda {
     @Column(name = "tiene_telefono")
     private Boolean tieneTelefono;
 
+    @Column(name = "tiene_internet")
+    private Boolean tieneInternet;
+
 }
