@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -20,6 +21,9 @@ public class ProblemaDetectado implements Serializable {
     @Column(name = "detalle")
     private String detalle;
 
+    @Column(name = "fecha")
+    private LocalDate fecha;
+
     @Column(name = "observacion")
     private String observacion;
 
@@ -27,5 +31,12 @@ public class ProblemaDetectado implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private FichaSocioeconomica fichaSocioeconomica;
+
+    @PrePersist
+    void preInsert(){
+        if(this.fecha == null){
+            this.fecha = LocalDate.now();
+        }
+    }
 
 }

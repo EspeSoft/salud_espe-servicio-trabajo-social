@@ -97,6 +97,7 @@ public class ProblemaDetectadoController {
             ProblemaDetectado problema = service.findById(id);
             problema.setDetalle(problemaDetectado.getDetalle());
             problema.setObservacion(problemaDetectado.getObservacion());
+            problema.setFecha(problemaDetectado.getFecha());
             return service.save(problema);
         }else{
             throw new EntityNotFoundException(problemaNotFoundMessage + idPaciente);
