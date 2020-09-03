@@ -31,6 +31,10 @@ public class SeguimientoAcompaniamiento implements Serializable {
     @Column(name = "observacion") // TODO Implementar como campo unico
     private Long observacion;
 
+    @JoinColumn(name = "id_seguimiento", referencedColumnName = "id")
+    @ManyToOne
+    @JsonIgnore
+    private Seguimiento seguimiento;
 
 
 }
