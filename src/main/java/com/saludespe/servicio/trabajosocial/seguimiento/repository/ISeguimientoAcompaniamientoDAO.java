@@ -4,10 +4,10 @@ import com.saludespe.servicio.trabajosocial.seguimiento.model.SeguimientoAcompan
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface ISeguimientoAcompaniamientoDAO extends CrudRepository<SeguimientoAcompaniamiento, Long> {
-    @Query(value = "SELECT * FROM SEGUIMIENTOS_ACOMPANIAMIENTOS ap WHERE ap.id_paciente = ?1", nativeQuery = true)
-    Optional<SeguimientoAcompaniamiento> findByPaciente(Long idPaciente);
+    @Query(value = "SELECT * FROM SEGUIMIENTOS_ACOMPANIAMIENTOS ap WHERE ap.id_seguimiento = ?1", nativeQuery = true)
+    List<SeguimientoAcompaniamiento> findBySeguimiento(Long idSeguimiento);
 
 }

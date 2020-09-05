@@ -1,10 +1,5 @@
 package com.saludespe.servicio.trabajosocial.seguimiento.controller;
 
-
-import com.saludespe.servicio.trabajosocial.fichasocioeconomica.model.AspectoSocial;
-import com.saludespe.servicio.trabajosocial.fichasocioeconomica.model.FichaSocioeconomica;
-import com.saludespe.servicio.trabajosocial.fichasocioeconomica.service.interfaces.IAspectoSocialService;
-import com.saludespe.servicio.trabajosocial.fichasocioeconomica.service.interfaces.IFichaSocioeconomicaService;
 import com.saludespe.servicio.trabajosocial.seguimiento.model.Seguimiento;
 import com.saludespe.servicio.trabajosocial.seguimiento.model.Visita;
 import com.saludespe.servicio.trabajosocial.seguimiento.service.interfaces.ISeguimientoService;
