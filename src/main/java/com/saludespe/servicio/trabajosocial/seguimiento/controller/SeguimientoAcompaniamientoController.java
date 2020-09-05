@@ -1,7 +1,9 @@
 package com.saludespe.servicio.trabajosocial.seguimiento.controller;
 
+import com.saludespe.servicio.trabajosocial.seguimiento.model.Seguimiento;
 import com.saludespe.servicio.trabajosocial.seguimiento.model.SeguimientoAcompaniamiento;
 import com.saludespe.servicio.trabajosocial.seguimiento.service.interfaces.ISeguimientoAcompaniamientoService;
+import com.saludespe.servicio.trabajosocial.seguimiento.service.interfaces.ISeguimientoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,16 +23,21 @@ public class SeguimientoAcompaniamientoController {
     private static String notFoundMessage = "Seguimiento acompañamiento no encontrado para el id: ";
 
     @Autowired
+    private ISeguimientoService seguimientoService;
+    @Autowired
     private ISeguimientoAcompaniamientoService service;
+
 
     @PostMapping("/")
     @ApiOperation(
             value = "Ingresar seguimiento acompañamiento",
             notes = "Se debe enviar el body en formato Json",
             response = SeguimientoAcompaniamiento.class)
-    public SeguimientoAcompaniamiento save(@Valid @RequestBody SeguimientoAcompaniamiento seguimientoAcompaniamiento) {
-        Optional<SeguimientoAcompaniamiento> seguimientoAcompaniamiento1 = service.findByPaciente(seguimientoAcompaniamiento.getIdPaciente());
-        if (!seguimientoAcompaniamiento1.isPresent()) {
+    public SeguimientoAcompaniamiento save(@PathVariable Long idPaciente,
+            @Valid @RequestBody SeguimientoAcompaniamiento seguimientoAcompaniamiento) {
+        Optional<Seguimiento> seguimiento = seguimientoService.findByPaciente(idPaciente);
+        if (!seguimiento.isPresent()) {
+            seguimientoAcompaniamiento.setSeguimiento(seguimiento.get());
             return service.save(seguimientoAcompaniamiento);
         }else {
             throw new ResponseStatusException(

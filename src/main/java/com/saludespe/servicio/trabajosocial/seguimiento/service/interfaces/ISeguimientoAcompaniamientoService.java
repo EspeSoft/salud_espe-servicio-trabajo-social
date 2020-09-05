@@ -1,6 +1,6 @@
 package com.saludespe.servicio.trabajosocial.seguimiento.service.interfaces;
 
-import com.saludespe.servicio.trabajosocial.seguimiento.model.SeguimientoaAcompaniamiento;
+import com.saludespe.servicio.trabajosocial.seguimiento.model.SeguimientoAcompaniamiento;
 
 import java.util.Optional;
 

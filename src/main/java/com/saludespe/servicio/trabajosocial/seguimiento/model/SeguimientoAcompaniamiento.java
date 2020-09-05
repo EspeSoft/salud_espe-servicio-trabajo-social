@@ -1,11 +1,13 @@
 package com.saludespe.servicio.trabajosocial.seguimiento.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
+import java.time.LocalDate;
+
 
 @Entity
 @Data
@@ -21,7 +23,7 @@ public class SeguimientoAcompaniamiento implements Serializable {
 
     @NotNull
     @Column(name = "fecha") 
-    private Date fecha;
+    private LocalDate fecha;
 
     @NotNull
     @Column(name = "descripcion") // TODO Implementar como campo unico
