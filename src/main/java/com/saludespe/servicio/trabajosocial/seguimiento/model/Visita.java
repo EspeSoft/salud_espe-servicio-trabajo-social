@@ -3,6 +3,7 @@ package com.saludespe.servicio.trabajosocial.seguimiento.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.saludespe.servicio.trabajosocial.fichasocioeconomica.model.FichaSocioeconomica;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -23,6 +24,7 @@ public class Visita {
     @Column(name = "motivo")
     private String motivo;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "fecha_visita")
     private LocalDate fechaVisita;
 
@@ -67,6 +69,10 @@ public class Visita {
     @JsonIgnore
     private Seguimiento seguimiento;
 
-
-
+    @PrePersist
+    void preInsert(){
+        if(this.fechaVisita == null){
+            this.fechaVisita = LocalDate.now();
+        }
+    }
 }

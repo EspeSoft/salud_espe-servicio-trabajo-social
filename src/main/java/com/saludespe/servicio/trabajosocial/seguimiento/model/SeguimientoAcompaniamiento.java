@@ -2,6 +2,7 @@ package com.saludespe.servicio.trabajosocial.seguimiento.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,21 +23,28 @@ public class SeguimientoAcompaniamiento implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "fecha") 
+    @Column(name = "fecha")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
 
     @NotNull
     @Column(name = "descripcion") // TODO Implementar como campo unico
-    private Long descripcion;
+    private String descripcion;
 
     @NotNull
     @Column(name = "observacion") // TODO Implementar como campo unico
-    private Long observacion;
+    private String observacion;
 
     @JoinColumn(name = "id_seguimiento", referencedColumnName = "id")
     @ManyToOne
     @JsonIgnore
     private Seguimiento seguimiento;
 
+    @PrePersist
+    void preInsert(){
+        if(this.fecha == null){
+            this.fecha = LocalDate.now();
+        }
+    }
 
 }

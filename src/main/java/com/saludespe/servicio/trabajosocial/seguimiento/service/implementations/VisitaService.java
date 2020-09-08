@@ -14,6 +14,11 @@ public class VisitaService implements IVisitaService {
     @Autowired
     private IVisitaDAO dao;
 
+    @Autowired
+    public VisitaService(IVisitaDAO dao){
+        this.dao = dao;
+    }
+
     @Override
     @Transactional
     public Visita save(Visita visita) {

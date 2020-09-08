@@ -1,7 +1,9 @@
 package com.saludespe.servicio.trabajosocial.seguimiento.service.implementations;
 
 import com.saludespe.servicio.trabajosocial.seguimiento.model.SeguimientoAcompaniamiento;
+import com.saludespe.servicio.trabajosocial.seguimiento.model.Visita;
 import com.saludespe.servicio.trabajosocial.seguimiento.repository.ISeguimientoAcompaniamientoDAO;
+import com.saludespe.servicio.trabajosocial.seguimiento.repository.IVisitaDAO;
 import com.saludespe.servicio.trabajosocial.seguimiento.service.interfaces.ISeguimientoAcompaniamientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,11 @@ public class SeguimientoAcompaniamientoService implements ISeguimientoAcompaniam
     @Autowired
     private ISeguimientoAcompaniamientoDAO dao;
 
+    @Autowired
+    public SeguimientoAcompaniamientoService(ISeguimientoAcompaniamientoDAO dao){
+        this.dao = dao;
+    }
+
     @Override
     @Transactional
     public SeguimientoAcompaniamiento save(SeguimientoAcompaniamiento seguimientoAcompaniamiento) {
@@ -27,6 +34,7 @@ public class SeguimientoAcompaniamientoService implements ISeguimientoAcompaniam
     public void delete(Long id) {
         dao.deleteById(id);
     }
+
 
     @Override
     @Transactional
