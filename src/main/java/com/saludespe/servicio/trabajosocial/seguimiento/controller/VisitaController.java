@@ -16,9 +16,8 @@ import java.util.Optional;
 
 @Validated
 @RestController
-@RequestMapping(value="{idPaciente}/visitas")
+@RequestMapping(value="/seguimientos/{idSeguimiento}/visitas")
 public class VisitaController {
-    private static String visitaNotFoundMessage = "No existe un registro  para el paciente: ";
 
     @Autowired
     private IVisitaService service;
@@ -26,33 +25,31 @@ public class VisitaController {
     @Autowired
     private ISeguimientoService seguimientoService;
 
+
+    @Autowired
+    public VisitaController(
+            IVisitaService service,
+            ISeguimientoService seguimientoService) {
+        this.service = service;
+        this.seguimientoService = seguimientoService;
+    }
+
     @PostMapping("/")
     @ApiOperation(
             value = "Ingresar visita",
             notes = "Se debe enviar el body en formato Json",
             response = Visita.class)
-    public Visita save(@PathVariable Long idPaciente,
+    public Visita save(@PathVariable Long idSeguimiento,
                               @Valid @RequestBody Visita visita) {
-        Optional<Seguimiento> seguimiento = seguimientoService.findByPaciente(idPaciente);
-        if (seguimiento.isPresent()){
-            visita.setSeguimiento(seguimiento.get());
-            return  service.save(visita);
-        }else  {
-            throw new EntityNotFoundException(visitaNotFoundMessage + idPaciente);
-        }
-
-    }
-
-    @GetMapping("/{id}")
-    @ApiOperation(value = "Buscar visita por id",
-            notes = "Se debe enviar el id",
-            response = Visita.class)
-    public Visita retrieve(@PathVariable Long id) {
-        return service.findById(id);
+       Seguimiento seguimiento = seguimientoService.findById(idSeguimiento);
+       visita.setSeguimiento(seguimiento);
+       return service.save(visita);
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Eliminar visita por id", notes = "Se debe enviar el id", response = Visita.class)
+    @ApiOperation(value = "Eliminar visita por id",
+                    notes = "Se debe enviar el id",
+                    response = Visita.class)
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
@@ -69,13 +66,8 @@ public class VisitaController {
     @GetMapping("")
     @ApiOperation(
             value = "Buscar lista de visitas por paciente", notes = "", response = Visita.class)
-    public List<Visita> visitaList(@PathVariable Long idPaciente) {
-        Optional<Seguimiento> seguimiento = seguimientoService.findByPaciente(idPaciente);
-        if(seguimiento.isPresent()){
-            return service.findBySeguimiento(seguimiento.get().getId());
-        }else {
-            throw new EntityNotFoundException(visitaNotFoundMessage + idPaciente);
-        }
+    public List<Visita> findBySeguimiento(@PathVariable Long idSeguimiento) {
+        return service.findBySeguimiento(idSeguimiento);
     }
 
 
@@ -85,10 +77,7 @@ public class VisitaController {
             notes = "Se debe enviar el body y el id a actualizar",
             response = Visita.class)
     public Visita update(
-            @PathVariable Long idPaciente,
             @Valid @RequestBody Visita visita, @PathVariable Long id){
-        Optional<Seguimiento> seguimiento = seguimientoService.findByPaciente(idPaciente);
-        if (seguimiento.isPresent()){
             Visita visita1 = service.findById(id);
             visita1.setMotivo(visita.getMotivo());
             visita1.setFechaVisita(visita.getFechaVisita());
@@ -105,8 +94,5 @@ public class VisitaController {
             visita1.setDiasReposo(visita.getDiasReposo());
             visita.setFamiliar(visita.getFamiliar());
             return service.save(visita1);
-        }else{
-            throw new EntityNotFoundException(visitaNotFoundMessage + idPaciente);
-        }
     }
 }

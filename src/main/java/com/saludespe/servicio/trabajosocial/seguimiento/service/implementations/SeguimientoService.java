@@ -1,7 +1,4 @@
 package com.saludespe.servicio.trabajosocial.seguimiento.service.implementations;
-
-import com.saludespe.servicio.trabajosocial.fichasocioeconomica.model.FichaSocioeconomica;
-import com.saludespe.servicio.trabajosocial.fichasocioeconomica.repository.IFichaSocioeconomicaDAO;
 import com.saludespe.servicio.trabajosocial.seguimiento.model.Seguimiento;
 import com.saludespe.servicio.trabajosocial.seguimiento.repository.ISeguimientoDAO;
 import com.saludespe.servicio.trabajosocial.seguimiento.service.interfaces.ISeguimientoService;
@@ -9,35 +6,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
 @Service
 public class SeguimientoService implements ISeguimientoService {
 
+
+    private final ISeguimientoDAO dao;
+
     @Autowired
-    private ISeguimientoDAO dao;
+    public SeguimientoService(ISeguimientoDAO dao){
+        this.dao = dao;
+    }
+
 
     @Override
-    @Transactional
     public Seguimiento save(Seguimiento seguimiento) {
         return dao.save(seguimiento);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Optional<Seguimiento> findById(Long id){
-        return dao.findById(id);
-    }
-
-    @Override
     @Transactional
-    public void delete(Long id) {
-        dao.deleteById(id);
+    public Seguimiento update(Seguimiento seguimiento) {
+        return dao.save(seguimiento);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Seguimiento> findByPaciente(Long idPaciente){
-        return dao.findByPaciente(idPaciente);
+    public Seguimiento findById(Long id) {
+        return dao.findById(id).orElseThrow(()->
+                new EntityNotFoundException("Seguimiento no econtrada para el id: " + id));
     }
+    @Override
+    @Transactional(readOnly = true)
+    public List<Seguimiento> findByPaciente(Long idPaciente) {
+        return dao.findByIdPaciente(idPaciente);
+    }
+
+
 
 }

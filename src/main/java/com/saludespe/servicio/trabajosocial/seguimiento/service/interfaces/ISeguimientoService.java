@@ -2,16 +2,19 @@ package com.saludespe.servicio.trabajosocial.seguimiento.service.interfaces;
 
 import com.saludespe.servicio.trabajosocial.seguimiento.model.Seguimiento;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ISeguimientoService {
 
     Seguimiento save(Seguimiento seguimiento);
 
-    void delete(Long id);
+    Seguimiento update(Seguimiento seguimiento);
 
-    Optional<Seguimiento> findById(Long id);
+    Seguimiento findById(Long id);
 
-    Optional<Seguimiento> findByPaciente(Long idPaciente);
+    List<Seguimiento> findByPaciente(Long idPaciente);
+
+
 
 }
