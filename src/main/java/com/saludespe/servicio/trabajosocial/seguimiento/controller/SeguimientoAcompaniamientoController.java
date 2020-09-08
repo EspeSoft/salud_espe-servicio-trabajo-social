@@ -5,6 +5,7 @@ import com.saludespe.servicio.trabajosocial.seguimiento.model.SeguimientoAcompan
 import com.saludespe.servicio.trabajosocial.seguimiento.model.Visita;
 import com.saludespe.servicio.trabajosocial.seguimiento.service.interfaces.ISeguimientoAcompaniamientoService;
 import com.saludespe.servicio.trabajosocial.seguimiento.service.interfaces.ISeguimientoService;
+import com.saludespe.servicio.trabajosocial.seguimiento.service.interfaces.IVisitaService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,15 +20,21 @@ import java.util.Optional;
 
 @Validated
 @RestController
-@RequestMapping(value="{idPaciente}/seguimientos-acompaniamientos")
+@RequestMapping(value="{seguimientos/{idSeguimiento}/acompaniamientos")
 public class SeguimientoAcompaniamientoController {
-
-    private static String notFoundMessage = "Seguimiento acompañamiento no encontrado para el id: ";
 
     @Autowired
     private ISeguimientoService seguimientoService;
     @Autowired
     private ISeguimientoAcompaniamientoService service;
+
+    @Autowired
+    public SeguimientoAcompaniamientoController(
+            ISeguimientoAcompaniamientoService service,
+            ISeguimientoService seguimientoService) {
+        this.service = service;
+        this.seguimientoService = seguimientoService;
+    }
 
 
     @PostMapping("/")
@@ -35,15 +42,11 @@ public class SeguimientoAcompaniamientoController {
             value = "Ingresar seguimiento acompañamiento",
             notes = "Se debe enviar el body en formato Json",
             response = SeguimientoAcompaniamiento.class)
-    public SeguimientoAcompaniamiento save(@PathVariable Long idPaciente,
+    public SeguimientoAcompaniamiento save(@PathVariable Long idSeguimiento,
             @Valid @RequestBody SeguimientoAcompaniamiento seguimientoAcompaniamiento) {
-        Optional<Seguimiento> seguimiento = seguimientoService.findByPaciente(idPaciente);
-        if (seguimiento.isPresent()) {
-            seguimientoAcompaniamiento.setSeguimiento(seguimiento.get());
-            return service.save(seguimientoAcompaniamiento);
-        }else {
-            throw new EntityNotFoundException(notFoundMessage + idPaciente);
-        }
+        Seguimiento seguimiento = seguimientoService.findById(idSeguimiento);
+        seguimientoAcompaniamiento.setSeguimiento(seguimiento);
+        return service.save(seguimientoAcompaniamiento);
     }
 
     @GetMapping("/{id}")
@@ -72,13 +75,8 @@ public class SeguimientoAcompaniamientoController {
     @GetMapping("")
     @ApiOperation(
             value = "Buscar lista de seguimientos-acompañamientos por paciente", notes = "", response = SeguimientoAcompaniamiento.class)
-    public List<SeguimientoAcompaniamiento> visitaList(@PathVariable Long idPaciente) {
-        Optional<Seguimiento> seguimiento = seguimientoService.findByPaciente(idPaciente);
-        if(seguimiento.isPresent()){
-            return service.findBySeguimiento(seguimiento.get().getId());
-        }else {
-            throw new EntityNotFoundException(notFoundMessage + idPaciente);
-        }
+    public List<SeguimientoAcompaniamiento> visitaList(@PathVariable Long idSeguimiento) {
+        return service.findBySeguimiento(idSeguimiento);
     }
     @PutMapping("/{id}")
     @ApiOperation(
@@ -86,17 +84,11 @@ public class SeguimientoAcompaniamientoController {
             notes = "Se debe enviar el body y el id a actualizar",
             response = SeguimientoAcompaniamiento.class)
     public SeguimientoAcompaniamiento update(
-            @PathVariable Long idPaciente,
             @Valid @RequestBody SeguimientoAcompaniamiento seguimientoAcompaniamiento, @PathVariable Long id){
-        Optional<Seguimiento> seguimiento = seguimientoService.findByPaciente(idPaciente);
-        if (seguimiento.isPresent()){
             SeguimientoAcompaniamiento seguimientoAcompaniamiento1 = service.findById(id);
             seguimientoAcompaniamiento1.setFecha(seguimientoAcompaniamiento.getFecha());
             seguimientoAcompaniamiento1.setDescripcion(seguimientoAcompaniamiento.getDescripcion());
             seguimientoAcompaniamiento1.setObservacion(seguimientoAcompaniamiento.getObservacion());
             return service.save(seguimientoAcompaniamiento1);
-        }else{
-            throw new EntityNotFoundException(notFoundMessage + idPaciente);
-        }
     }
 }

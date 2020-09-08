@@ -1,11 +1,14 @@
 package com.saludespe.servicio.trabajosocial.seguimiento.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.saludespe.servicio.trabajosocial.fichasocioeconomica.model.IngresoEconomico;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -28,7 +31,27 @@ public class Seguimiento implements Serializable {
     @Column(name = "id_evolucion") // TODO Implementar como campo unico
     private Long idEvolucion;
 
+    @NotNull
+    @Column(name = "fecha_inicio")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaInicio;
+
+    @NotNull
+    @Column(name = "estado") // TODO Implementar como campo unico
+    private String descripcion;
+
     @OneToMany(mappedBy = "seguimiento", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Visita> visitaList;
 
+    @OneToMany(mappedBy = "seguimiento", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<SeguimientoAcompaniamiento> seguimientoAcompaniamientoList;
+
+    @PrePersist
+    void preInsert(){
+        if(this.fechaInicio == null){
+            this.fechaInicio = LocalDate.now();
+        }
+    }
 }
