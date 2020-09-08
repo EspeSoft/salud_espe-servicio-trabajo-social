@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Validated
@@ -54,5 +55,12 @@ public class SeguimientoController {
             seguimiento1.setEstado(seguimiento.getEstado());
             seguimiento1.setFechaInicio(seguimiento1.getFechaInicio());
             return service.update(seguimiento1);
+    }
+    @GetMapping("")
+    @ApiOperation(
+            value = "Buscar seguimiento por Id Paciente",
+            response = Seguimiento.class)
+    public List<Seguimiento> findByPaciente(@RequestParam Long idPaciente) {
+        return service.findByPaciente(idPaciente);
     }
 }
