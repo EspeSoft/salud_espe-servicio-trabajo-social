@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Validated
 @RestController
-@RequestMapping(value="{seguimientos/{idSeguimiento}/acompaniamientos")
+@RequestMapping(value="{seguimientos/{idSeguimiento}/seguimientos-acompaniamientos")
 public class SeguimientoAcompaniamientoController {
 
     @Autowired

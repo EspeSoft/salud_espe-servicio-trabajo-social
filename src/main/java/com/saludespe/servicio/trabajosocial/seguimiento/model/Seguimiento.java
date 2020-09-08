@@ -38,7 +38,7 @@ public class Seguimiento implements Serializable {
 
     @NotNull
     @Column(name = "estado") // TODO Implementar como campo unico
-    private String descripcion;
+    private String estado;
 
     @OneToMany(mappedBy = "seguimiento", fetch = FetchType.LAZY)
     @JsonIgnore

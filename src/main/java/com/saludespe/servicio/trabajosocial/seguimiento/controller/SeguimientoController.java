@@ -18,10 +18,13 @@ import java.util.Optional;
 @RequestMapping(value="/seguimientos")
 public class SeguimientoController {
 
-    private static String notFoundMessage = "Seguimiento no encontrado para el id: ";
+    private final ISeguimientoService service;
 
     @Autowired
-    private ISeguimientoService service;
+    public SeguimientoController(ISeguimientoService service){
+        this.service = service;
+    }
+
 
     @PostMapping("/")
     @ApiOperation(
@@ -29,56 +32,27 @@ public class SeguimientoController {
             notes = "Se debe enviar el body en formato Json",
             response = Seguimiento.class)
     public Seguimiento save(@Valid @RequestBody Seguimiento seguimiento) {
-        Optional<Seguimiento> seguimiento1 = service.findByPaciente(seguimiento.getIdPaciente());
-        if (!seguimiento1.isPresent()) {
-            return service.save(seguimiento);
-        }else {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "El paciente ya posee un seguimiento.");
-        }
+        return service.save(seguimiento);
     }
 
-    @GetMapping(
-            value = "/{id}",
-            produces = "application/json")
+    @GetMapping(value = "/{id}")
     @ApiOperation(
             value = "Buscar seguimiento por id",
             notes = "Se debe enviar el id",
             response = Seguimiento.class)
-    public Seguimiento retrieve(@PathVariable Long id) {
-        Optional<Seguimiento> seguimiento = service.findById(id);
-        if (seguimiento.isPresent()){
-            return seguimiento.get();
-        }else{
-            throw new EntityNotFoundException(notFoundMessage + id);
-        }
+    public Seguimiento retrieve(@Valid @PathVariable Long id) {
+        return service.findById(id);
     }
 
-    @GetMapping("/search")
-    @ApiOperation(
-            value = "Buscar seguimiento por Id del paciente",
-            notes = "Enviar id del paciente",
-            response = Seguimiento.class)
-    public Seguimiento findByPaciente(@RequestParam Long idPaciente) {
-        Optional<Seguimiento> seguimiento = service.findByPaciente(idPaciente);
-        if (seguimiento.isPresent()){
-            return seguimiento.get();
-        }else{
-            throw new EntityNotFoundException(notFoundMessage + idPaciente);
-        }
-    }
     @PutMapping("/{id}")
     @ApiOperation(
             value = "Actualizar seguimiento por id",
             notes = "Se debe enviar el body y el id a actualizar",
             response = Seguimiento.class)
     public Seguimiento update(@Valid @RequestBody Seguimiento seguimiento, @PathVariable Long id){
-        Optional<Seguimiento> optional = service.findById(id);
-        if (optional.isPresent()){
-            Seguimiento seguimiento1 = optional.get();
-            return service.save(seguimiento1);
-        }else{
-            throw new EntityNotFoundException(notFoundMessage + id);
-        }
+            Seguimiento seguimiento1 = service.findById(id);
+            seguimiento1.setEstado(seguimiento.getEstado());
+            seguimiento1.setFechaInicio(seguimiento1.getFechaInicio());
+            return service.update(seguimiento1);
     }
 }
