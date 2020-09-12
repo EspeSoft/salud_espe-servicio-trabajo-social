@@ -1,5 +1,6 @@
 package com.saludespe.servicio.trabajosocial.seguimiento.service.implementations;
 import com.saludespe.servicio.trabajosocial.seguimiento.model.Seguimiento;
+import com.saludespe.servicio.trabajosocial.seguimiento.model.Visita;
 import com.saludespe.servicio.trabajosocial.seguimiento.repository.ISeguimientoDAO;
 import com.saludespe.servicio.trabajosocial.seguimiento.service.interfaces.ISeguimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,15 @@ public class SeguimientoService implements ISeguimientoService {
         return dao.findByIdPaciente(idPaciente);
     }
 
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        dao.deleteById(id);
+    }
 
+    @Override
+    public void deleteAll(List<Seguimiento> seguimientoList) {
+        dao.deleteAll(seguimientoList);
+    }
 
 }
