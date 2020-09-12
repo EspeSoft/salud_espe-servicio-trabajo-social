@@ -63,4 +63,22 @@ public class SeguimientoController {
     public List<Seguimiento> findByPaciente(@RequestParam Long idPaciente) {
         return service.findByPaciente(idPaciente);
     }
+    @DeleteMapping("/{id}")
+    @ApiOperation(
+            value = "Eliminar un seguimiento",
+            notes = "Debe proporcionar un id para eliminar un seguimiento",
+            response = Seguimiento.class)
+    public void deleteSeguimiento(@PathVariable Long id) {
+        service.delete(id);
+    }
+
+    @DeleteMapping("/delete-all")
+    @ApiOperation(
+            value = "Eliminar una lista de examenes",
+            notes = "Se debe enviar una lista",
+            response = Seguimiento.class)
+    public void deleteAll(@RequestBody List<Seguimiento> seguimientos) {
+        service.deleteAll(seguimientos);
+    }
+
 }
